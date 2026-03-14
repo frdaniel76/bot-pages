@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Meal Planning System — Project Plan & QA Design</title>
+    <meta property="og:title" content="Family Meal Planning System">
+    <meta property="og:description" content="Project plan & QA design for a WhatsApp-based family meal coordination bot.">
+    <meta property="og:type" content="website">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin: 10px 0;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-top: 15px;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        main {
+            padding: 40px;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        h4 {
+            color: #555;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+        
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+            border-left: 4px solid #667eea;
+        }
+        
+        pre code {
+            color: #d4d4d4;
+            background: none;
+            padding: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:hover {
+            background: #f8f9ff;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        blockquote {
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            background: #f8f9ff;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+        
+        a {
+            color: #667eea;
+            text-decoration: none;
+            border-bottom: 1px dotted #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: #764ba2;
+            border-bottom-color: #764ba2;
+        }
+        
+        .toc {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .toc ul {
+            margin-left: 20px;
+        }
+        
+        footer {
+            background: #f8f9ff;
+            padding: 30px 40px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .meta {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .meta-label {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        
+        .meta-value {
+            color: #333;
+            font-size: 1.1em;
+        }
+        
+        .section-box {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        
+        .checklist {
+            list-style: none;
+        }
+        
+        .checklist li {
+            padding-left: 25px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            header {
+                padding: 40px 20px;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            main {
+                padding: 20px;
+            }
+            
+            pre {
+                font-size: 0.85em;
+                padding: 15px;
+            }
+            
+            table {
+                font-size: 0.9em;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍽️ Family Meal Planning System</h1>
+            <p>Project Plan & QA Design Specification</p>
+            <div class="status-badge">DESIGN & QA SPEC — Ready for Implementation</div>
+        </header>
+        
+        <main>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="meta-label">Document</span>
+                    <span class="meta-value">FAMILY_MEALS_PROJECT_PLAN.md</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Date</span>
+                    <span class="meta-value">2026-03-14</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">Design Complete</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Priority</span>
+                    <span class="meta-value">🔴 HIGH</span>
+                </div>
+            </div>
+
+            <div class="toc">
+                <h3>📑 Table of Contents</h3>
+                <ul>
+                    <li><a href="#overview">Project Overview</a></li>
+                    <li><a href="#architecture">Code Architecture</a></li>
+                    <li><a href="#data-flow">Data Flow Diagrams</a></li>
+                    <li><a href="#module-breakdown">Module Breakdown</a></li>
+                    <li><a href="#api">API & Function Signatures</a></li>
+                    <li><a href="#database">Database Schema</a></li>
+                    <li><a href="#error-handling">Error Handling Strategy</a></li>
+                    <li><a href="#qa-test-plan">QA Test Plan</a></li>
+                    <li><a href="#risk-assessment">Risk Assessment</a></li>
+                    <li><a href="#implementation">Implementation Checklist</a></li>
+                </ul>
+            </div>
+
+            <h2 id="overview">Project Overview</h2>
+            
+            <h3>🎯 High-Level Goal</h3>
+            <p>Build a <strong>WhatsApp-based family meal planning system</strong> where:</p>
+            <ul>
+                <li>Family starts with zero recipes</li>
+                <li>Members add recipes interactively via <code>/add</code> command</li>
+                <li>Members search BBC Good Food for inspiration via <code>/inspire</code> command</li>
+                <li>Members propose & vote on meals weekly</li>
+                <li>System generates shopping lists automatically</li>
+                <li>All data persists in local JSON/YAML files</li>
+            </ul>
+
+            <h3>⚙️ Key Constraints</h3>
+            <table>
+                <tr>
+                    <th>Constraint</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>Storage</td>
+                    <td>Local files only (no database)</td>
+                </tr>
+                <tr>
+                    <td>Scale</td>
+                    <td>4 family members, ~50 recipes (estimated max)</td>
+                </tr>
+                <tr>
+                    <td>Platform</td>
+                    <td>WhatsApp via OpenClaw MCP</td>
+                </tr>
+                <tr>
+                    <td>Hosting</td>
+                    <td>Self-hosted on moltbot server</td>
+                </tr>
+                <tr>
+                    <td>Development Time</td>
+                    <td>4-5 days (MVP)</td>
+                </tr>
+            </table>
+
+            <h3>✅ Success Criteria</h3>
+            <ul>
+                <li>✅ Family can add 5 recipes via chat in &lt;30 minutes</li>
+                <li>✅ Weekly meal planning workflow works end-to-end</li>
+                <li>✅ Shopping list generates correctly (deduplicated, grouped by category)</li>
+                <li>✅ BBC Good Food search returns 3+ usable recipes per query</li>
+                <li>✅ No data loss on bot restart</li>
+                <li>✅ All edge cases handled gracefully (invalid input, network errors, etc.)</li>
+            </ul>
+
+            <h2 id="architecture">Code Architecture</h2>
+            
+            <h3>📁 Directory Structure</h3>
+            <pre><code>~/.family-meals/
+├─ bot.js                           # Main bot entry point
+├─ config.yaml                      # Bot & family config
+├─ package.json                     # Dependencies
+├─ lib/
+│  ├─ commands/                     # Command handlers
+│  │  ├─ add.js                     # /add recipe creation
+│  │  ├─ inspire.js                 # /inspire BBC search
+│  │  ├─ list.js                    # /list recipes
+│  │  ├─ propose.js                 # /propose meal
+│  │  ├─ vote.js                    # /vote on proposal
+│  │  ├─ plan.js                    # /plan weekly plan
+│  │  ├─ done.js                    # /done lock & generate shopping
+│  │  └─ help.js                    # /help command list
+│  ├─ services/
+│  │  ├─ fileManager.js             # Read/write YAML/JSON files
+│  │  ├─ recipeManager.js           # Recipe CRUD operations
+│  │  ├─ mealPlanManager.js         # Weekly meal plan logic
+│  │  ├─ shoppingListManager.js     # Shopping list generation
+│  │  ├─ bbcScraper.js              # BBC Good Food web scraper
+│  │  └─ mealHistoryManager.js      # Rating & history tracking
+│  └─ utils/
+│     ├─ validators.js              # Input validation
+│     ├─ formatters.js              # WhatsApp message formatting
+│     └─ dateUtils.js               # Date/week calculations
+├─ data/
+│  ├─ recipes/                      # Individual recipe YAML files
+│  ├─ meal_plans/                   # Weekly meal plans (JSON)
+│  ├─ shopping_lists/               # Generated shopping lists (JSON)
+│  ├─ family_members.yaml           # Family config
+│  └─ meal_history.json             # Ratings & history
+├─ tests/
+│  ├─ unit/                         # Unit tests
+│  └─ integration/                  # Integration tests
+└─ logs/
+   └─ bot.log                       # Bot activity log</code></pre>
+
+            <h2 id="implementation">Implementation Checklist</h2>
+
+            <h3>Phase 1: Core Setup (Day 1)</h3>
+            <ul class="checklist">
+                <li>Create directory structure (~/.family-meals/)</li>
+                <li>Initialize package.json with dependencies</li>
+                <li>Create config.yaml template</li>
+                <li>Create family_members.yaml template</li>
+                <li>Set up bot.js main entry point</li>
+                <li>Set up unit test framework (Jest)</li>
+            </ul>
+
+            <h3>Phase 2: Core Services (Day 1-2)</h3>
+            <ul class="checklist">
+                <li>Implement fileManager.js (readJson, writeJson, readYaml, writeYaml)</li>
+                <li>Implement validators.js (schema validation)</li>
+                <li>Implement formatters.js (WhatsApp formatting)</li>
+                <li>Write unit tests for services</li>
+            </ul>
+
+            <h3>Phase 3: Command Handlers (Day 2-3)</h3>
+            <ul class="checklist">
+                <li>/add command (multi-step conversation)</li>
+                <li>/list command (with filtering)</li>
+                <li>/inspire command (BBC search)</li>
+                <li>/propose command (meal suggestions)</li>
+                <li>/vote command (voting system)</li>
+                <li>/plan command (view weekly plan)</li>
+                <li>/done command (lock and generate shopping list)</li>
+                <li>Write integration tests</li>
+            </ul>
+
+            <h3>Phase 4: BBC Integration (Day 2-3)</h3>
+            <ul class="checklist">
+                <li>Implement bbcScraper.js with search & caching</li>
+                <li>Create test cases for scraper</li>
+                <li>Test with 5+ real BBC searches</li>
+            </ul>
+
+            <h3>Phase 5: QA & Testing (Day 4)</h3>
+            <ul class="checklist">
+                <li>Run unit test suite (&gt;80% coverage)</li>
+                <li>Run integration tests</li>
+                <li>Manual UAT with test account</li>
+                <li>Test error scenarios</li>
+                <li>Performance testing (50 recipes)</li>
+            </ul>
+
+            <h3>Phase 6: Deployment (Day 4-5)</h3>
+            <ul class="checklist">
+                <li>Final code review</li>
+                <li>Documentation (README.md)</li>
+                <li>Deploy to production</li>
+                <li>Monitor logs for errors</li>
+                <li>Collect family feedback</li>
+            </ul>
+
+            <h2 id="risk-assessment">Risk Assessment</h2>
+            <table>
+                <tr>
+                    <th>Risk</th>
+                    <th>Impact</th>
+                    <th>Likelihood</th>
+                    <th>Mitigation</th>
+                </tr>
+                <tr>
+                    <td>BBC website structure changes</td>
+                    <td>High</td>
+                    <td>Medium</td>
+                    <td>Graceful fallback to /add, fallback endpoint</td>
+                </tr>
+                <tr>
+                    <td>File corruption on write</td>
+                    <td>High</td>
+                    <td>Low</td>
+                    <td>Atomic writes, backup on error</td>
+                </tr>
+                <tr>
+                    <td>Concurrent writes (multiple users)</td>
+                    <td>High</td>
+                    <td>Medium</td>
+                    <td>File locking or JSON merges</td>
+                </tr>
+                <tr>
+                    <td>User forgets conversation step</td>
+                    <td>Medium</td>
+                    <td>Medium</td>
+                    <td>Timeout cleanup (5 min), /cancel command</td>
+                </tr>
+                <tr>
+                    <td>Rate limit on BBC scraper</td>
+                    <td>Medium</td>
+                    <td>Medium</td>
+                    <td>Cache, local fallback, limit searches to 1/min</td>
+                </tr>
+            </table>
+
+            <div class="section-box">
+                <h3>⏭️ Next Steps</h3>
+                <ol>
+                    <li><strong>Review this plan</strong> — any questions or changes?</li>
+                    <li><strong>Provide family config</strong> — names, dietary restrictions, meal preferences</li>
+                    <li><strong>Start implementation</strong> — begin with Phase 1 setup</li>
+                    <li><strong>Daily standup</strong> — check progress, unblock issues</li>
+                </ol>
+            </div>
+
+            <div class="section-box" style="border-left-color: #28a745;">
+                <h3>📊 Timeline Summary</h3>
+                <p><strong>Total Development Time:</strong> 4-5 days to MVP</p>
+                <p><strong>Current Status:</strong> Design complete, ready for feedback</p>
+                <p><strong>Next Action:</strong> Review & provide family config to begin Phase 1</p>
+            </div>
+        </main>
+        
+        <footer>
+            <p><strong>🍽️ Family Meal Planning System Specification</strong></p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Converted from FAMILY_MEALS_PROJECT_PLAN.md | Last Updated: 2026-03-14</p>
+        </footer>
+    </div>
+</body>
+</html>
